@@ -13,7 +13,7 @@ SWIGEX_EXPORT VectorInt fib(int n);
 class SWIGEX_EXPORT Fibo
 {
   public:
-    Fibo (int n, const String& title = "");
+    Fibo(int n, const String& title = "");
     virtual ~Fibo();
 
     void resetFromFiboVal(Fibo fib);

@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <sstream>
-#include <cmath>
+
 
 /**
  * Return the Nth Fibonacci number, -1 in case of error
@@ -13,9 +13,10 @@
  */
 int fibn(int n)
 {
-  if (n < 0 || n == INT_NA)
+  if (n <= 0 || n == INT_NA)
   {
-    std::cout << "Error in fibn: Integer argument must be positive!" << std::endl;
+    std::cout << "Error in fibn: Integer argument must be strictly positive!"
+              << std::endl;
     return -1;
   }
   int a = 0;
@@ -25,8 +26,8 @@ int fibn(int n)
   {
     if (i == n) return a;
     int aa = a;
-    a = b;
-    b = aa+b;
+    a      = b;
+    b      = aa + b;
     i++;
   }
   std::cout << "Error in fibn: Unknown error!" << std::endl;
@@ -43,9 +44,10 @@ int fibn(int n)
 VectorInt fib(int n)
 {
   VectorInt res;
-  if (n < 0 || n == INT_NA)
+  if (n <= 0 || n == INT_NA)
   {
-    std::cout << "Error in fib: Integer argument must be positive!" << std::endl;
+    std::cout << "Error in fib: Integer argument must be strictly positive!"
+              << std::endl;
     return res;
   }
   int a = 0;
@@ -54,39 +56,35 @@ VectorInt fib(int n)
   {
     res.push_back(a);
     int aa = a;
-    a = b;
-    b = aa+b;
+    a      = b;
+    b      = aa + b;
   }
   return res;
 }
 
 /**
  * Default constructor of a class which handle Fibonacci integers list up to n
- * 
+ *
  * @param n     Strict positive Integer
  * @param title Title to be printed (optional)
  */
 Fibo::Fibo(int n, const String& title)
-: _n(n)
-, _title(title)
+  : _n(n)
+  , _title(title)
 {
   if (_n <= 0)
   {
-    std::cout << "Fibonacci class must be initialized with a strict positive integer. N is set to 50." << std::endl;
+    std::cout << "Fibonacci class must be initialized with a strict positive "
+                 "integer. N is set to 50."
+              << std::endl;
     _n = 50;
   }
-
-  // Test static_assert compilation
-  static_assert( true, "Class cannot be cloned as it is abstract" );
-  // Test isnan
-  double a = 5.5;
-  if (std::isnan(a))
-    std::cout << "a is nan" << std::endl;
 
   if (_title.empty())
   {
     std::stringstream sstr;
-    sstr << DEFAULT_TITLE << " (" << SWIGEX_RELEASE << " - " << SWIGEX_DATE << ")";
+    sstr << DEFAULT_TITLE << " ("
+         << SWIGEX_RELEASE << " - " << SWIGEX_DATE << ")";
     _title = sstr.str();
   }
 }
@@ -107,7 +105,7 @@ Fibo::~Fibo()
 void Fibo::resetFromFiboVal(Fibo fibo)
 {
   _title = fibo._title;
-  _n = fibo._n;
+  _n     = fibo._n;
 }
 
 /**
@@ -119,7 +117,7 @@ void Fibo::resetFromFiboVal(Fibo fibo)
 void Fibo::resetFromFiboRef(const Fibo& fibo)
 {
   _title = fibo._title;
-  _n = fibo._n;
+  _n     = fibo._n;
 }
 
 /**
