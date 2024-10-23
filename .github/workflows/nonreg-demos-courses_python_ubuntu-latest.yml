@@ -29,6 +29,13 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install dependencies
+      run: |
+        sudo rm /etc/apt/sources.list.d/microsoft-prod.list
+        sudo apt-get update
+        sudo apt-get install -yq \
+          pandoc
+          
     - name: Setup Python Version
       uses: actions/setup-python@v5
       with:
