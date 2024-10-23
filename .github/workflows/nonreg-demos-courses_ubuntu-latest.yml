@@ -32,6 +32,10 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # Target language to be tested
+        tl: ["r", "python"]
 
     steps:
     - uses: actions/checkout@v4
@@ -42,6 +46,7 @@ jobs:
         python-version: ${{env.PYTHON_VERSION}}
 
     - name: Install Python dependencies
+      if: matrix.tl == "python"
       run: |
         python -m pip install --upgrade pip
         python -m pip install numpy==${{env.NUMPY_VERSION}}
@@ -52,27 +57,37 @@ jobs:
         python -m pip install gstlearn
 
     - name: Setup R Version
+      if: matrix.tl == "r"
       uses: r-lib/actions/setup-r@v2
       with:
         r-version: ${{env.R_VERSION}}
 
     - name: Install roxygen2
+      if: matrix.tl == "r"
       uses: r-lib/actions/setup-r-dependencies@v2
       with:
         packages: roxygen2
         install-pandoc: false
 
     - name: Install the customized SWIG from source
+      if: matrix.tl == "r"
       uses: fabien-ors/install-swig-unix-action@v1
       with:
         swig-root: ${{env.SWIG_ROOT}}
         generator: "Unix Makefiles"
 
-    - name: Configure build directory
+    - name: Configure build directory for python package
+      if: matrix.tl == "python"
       run: |
         cmake \
           -B${{ env.BUILD_DIR }} \
           -DBUILD_PYTHON=ON \
+
+    - name: Configure build directory for R package
+      if: matrix.tl == "r"
+      run: |
+        cmake \
+          -B${{ env.BUILD_DIR }} \
           -DBUILD_R=ON \
           -DSWIG_EXECUTABLE=${{env.SWIG_ROOT}}/bin/swig
 
@@ -81,11 +96,12 @@ jobs:
         cmake --build ${{env.BUILD_DIR}} --parallel 3
 
     - name: Execute Python demos and courses
+      if: matrix.tl == "python"
       run: |
         cmake --build ${{env.BUILD_DIR}} --parallel 3 --target check_ipynb
 
     - name: Execute R demos and courses
-      if: success() || failure()
+      if: matrix.tl == "r"
       run: |
         cmake --build ${{env.BUILD_DIR}} --parallel 3 --target check_rmd
 
