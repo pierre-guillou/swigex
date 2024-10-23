@@ -20,7 +20,7 @@ on:
         default: ''
 
 jobs:
-  call-r:
-    uses: ./.github/workflows/nonreg-demos-courses_python_ubuntu-latest.yml
   call-python:
+    uses: ./.github/workflows/nonreg-demos-courses_python_ubuntu-latest.yml
+  call-r:
     uses: ./.github/workflows/nonreg-demos-courses_r_ubuntu-latest.yml
