@@ -1,0 +1,73 @@
+name: nonreg-demos-courses_python_ubuntu-latest
+
+on:
+  # Permit calling the workflow from outside (https://github.com/actions/runner/discussions/1884)
+  workflow_call:
+   # Activate the workflow at each push on main branch
+  #push:
+  #  branches: [ main ]
+  # Activate the workflow at each pull request on main branch
+  #pull_request:
+  #  branches: [ main ]
+  # Permit manual trigger
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Manual'
+        required: false
+        default: ''
+
+env:
+  CMAKE_BUILD_TYPE : Release
+  BUILD_DIR : build
+  PYTHON_VERSION : "3.11"
+  NUMPY_VERSION : "1.23.5"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Python Version
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{env.PYTHON_VERSION}}
+
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install numpy==${{env.NUMPY_VERSION}}
+        python -m pip install jupyter
+        python -m pip install notebook==6.1.6
+        python -m pip install matplotlib
+        python -m pip install plotly
+        python -m pip install gstlearn
+
+    - name: Configure build directory for python package
+      run: |
+        cmake \
+          -B${{ env.BUILD_DIR }} \
+          -DBUILD_PYTHON=ON \
+
+    - name: Build the package
+      run: |
+        cmake --build ${{env.BUILD_DIR}} --parallel 3
+
+    - name: Execute Python demos and courses
+      run: |
+        cmake --build ${{env.BUILD_DIR}} --parallel 3 --target check_ipynb
+
+    - name: Compress output logs
+      if: success() || failure()
+      run: |
+        cd ${{env.BUILD_DIR}}/tests
+        find . -type f \( -name "*.asciidoc" \) -print0 | tar -czvf demos-courses-python-logs.tar.gz --null -T -
+
+    - name: Publish output logs as artefact
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: demos-courses-python-logs
+        path: ${{env.BUILD_DIR}}/tests/demos-courses-python-logs.tar.gz
