@@ -34,20 +34,21 @@ jobs:
         # Python version
         python: [
           # Double quote for version is needed otherwise 3.10 => 3.1
-            {py: "3.8"},
             {py: "3.9"},
             {py: "3.10"},
             {py: "3.11"},
-            {py: "3.12"}
+            {py: "3.12"},
+            {py: "3.13"}
           ]
         arch: [
-            {ar: x86_64, os: macos-12, pat: /usr/local},
-            {ar: arm64,  os: macos-14, pat: /opt/homebrew}
+            {ar: x86_64, os: macos-13, pat: /usr/local},
+            {ar: arm64,  os: macos-14, pat: /opt/homebrew},
+            {ar: arm64,  os: macos-15, pat: /opt/homebrew}
           ]
         exclude:
           - arch: {os: macos-14}
-            python: {py: "3.8"}
-          - arch: {os: macos-14}
+            python: {py: "3.9"}
+          - arch: {os: macos-15}
             python: {py: "3.9"}
 
     steps:
@@ -110,7 +111,7 @@ jobs:
         password: ${{secrets.TWINE_PYPI_PWD}}
         pattern: macos-python-package-*
 
-    # Delete the artifacts (for freeing storage space under github)
+    # Delete the artifacts (for freeing storage space under github)
     - uses: geekyeggo/delete-artifact@v5
       with:
         name: macos-python-package-*

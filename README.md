@@ -61,14 +61,14 @@ For installing from source, you must follow instructions from [https://github.co
 
 The only additional prerequisites are:
 * [All users] : *doxygen* 1.8.3 or higher
-* [Python users] : *numpy* (< v2), *notebook* and *nbconvert* Python packages
+* [Python users] : *numpy*, *notebook* and *nbconvert* Python packages
 * [R users] : *roxygen2*, *knitr* and *callr* R packages
 
 ### Linux (Ubuntu)
 
 ```
 sudo apt install doxygen
-python3 -m pip install numpy==1.26.4 notebook nbconvert
+python3 -m pip install numpy notebook nbconvert
 Rscript -e 'install.packages(c("roxygen2", "knitr", "callr"),repos="https://cloud.r-project.org")'
 ```
 
@@ -76,7 +76,7 @@ Rscript -e 'install.packages(c("roxygen2", "knitr", "callr"),repos="https://clou
 
 ```
 brew install doxygen
-python3 -m pip install numpy==1.26.4 notebook nbconvert
+python3 -m pip install numpy notebook nbconvert
 Rscript -e 'install.packages(c("roxygen2", "knitr", "callr"),repos="https://cloud.r-project.org")'
 ```
 
@@ -96,7 +96,7 @@ Download and install the following tool using default options during installatio
 2. Install additional Python modules by running following instructions in a command prompt:
 
 ````
-python -m pip install numpy==1.26.4 notebook nbconvert
+python -m pip install numpy notebook nbconvert
 ````
 
 #### Update the Path environment variable
@@ -147,7 +147,7 @@ If you experience the following error while importing *swigex* Package under Pyt
 
 ... you may need to upgrade numpy:
 
-    python -m pip install numpy==1.26.4
+    python -m pip install numpy
 
 * You may need to precise the location of Doxygen installation directory. In that case, add the following variable in the first cmake command (configuration):
   * `-DDoxygen_ROOT="path/to/doxygen"`
