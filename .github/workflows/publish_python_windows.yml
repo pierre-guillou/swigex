@@ -137,7 +137,7 @@ jobs:
       run: |
         python -c "import swigex as sw"
         python tests/py/testFibo.py
-        python tests/py/testArgss.py
+        python tests/py/testArgs.py
 
   publish:
     needs: test
