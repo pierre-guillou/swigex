@@ -41,6 +41,8 @@ Test VectorVectorInt Reference: [[26 36] [56 66]]
 Test VectorVectorInt Pointer: [[26 36] [56 66]]
 Test VectorVectorInt Reference Out: [[26 36] [56 66]]
 <class 'swigex.VectorVectorInt'>
+Test VectorVectorInt: [[100 101 102]]
+Test VectorVectorInt: [[100 101 102]]
 Test VectorVectorInt Reference Def: [[4 5] [6 7]] - [[8 9] [10 11]]
 Test VectorVectorInt Reference Def: [[3]] - [[8 9] [10 11]]
 Test VectorVectorInt Reference Def: [] - [[8 9] [10 11]]

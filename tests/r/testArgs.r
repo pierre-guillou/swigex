@@ -110,6 +110,12 @@ if (vvi[[1]][1] != 26 || vvi[[1]][2] != 36 ||
 {
   cat("Wrong VectorVectorInt Reference Out!", "\n")
 }
+
+invisible(vvi$clear())
+invisible(vvi$push_back(VectorInt(c(100,101,102))))
+vvi = a$testVVectorInt(vvi)
+vvi = a$testVVectorInt(list(c(100,101,102)))
+
 # TODO : Not yet available with swig_customized
 #invisible(a$testVVectorIntRefDef())
 #invisible(a$testVVectorIntRefDef(3))

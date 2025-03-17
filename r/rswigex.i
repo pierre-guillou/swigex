@@ -2,7 +2,6 @@
 
 // Note : Keep order in this file!
 
-//////////////////////////////////////////////////////////////
 //   Ignore functions that are not exportable with SWIG     //
 //////////////////////////////////////////////////////////////
 
@@ -68,7 +67,6 @@
     }
     return myres;
   }
-
   // Certainly not the most efficient way to convert vectors,
   // but at least, I can test each value for particular NAs
   SEXP getElem(SEXP obj, int i)
@@ -128,10 +126,13 @@
     int size = (int)Rf_length(obj);
     if (size == 1)
     {
-      // Not a vector (or a single value)
       InputVector vec;
+      SEXP item = getElem(obj,0);
       // Try to convert
-      myres = vectorToCpp(obj, vec);
+      if (TYPEOF(item) == NILSXP) 
+        myres = vectorToCpp(obj, vec);
+      else
+        myres = vectorToCpp(item, vec);
       if (SWIG_IsOK(myres))
         vvec.push_back(vec);
     }
@@ -283,11 +284,13 @@
 //////////////////////////////////////////////////////////////
 
 // TODO : Redirection of std::cout for windows RGui.exe users
+// TODO : Add a fix for inheritance problem: https://github.com/gstlearn/gstlearn/issues/308
 
 %insert(s)
 %{
 
-## Add operator [] to VectorXXX R class [1-based index] ##
+##
+## Add operator [] to VectorXXX R class [1-based index]
 ## ---------------------------------------------------- ##
 
 "getVitem" <-
@@ -337,5 +340,4 @@ setMethod('[[',   '_p_VectorTT_VectorNumTT_int_t_t',    getVitem)
 setMethod('[[<-', '_p_VectorTT_VectorNumTT_int_t_t',    setVitem)
 setMethod('[[',   '_p_VectorTT_VectorNumTT_double_t_t', getVitem)
 setMethod('[[<-', '_p_VectorTT_VectorNumTT_double_t_t', setVitem)
-
 %}

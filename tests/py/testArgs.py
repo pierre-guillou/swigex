@@ -89,6 +89,10 @@ print(type(vvi))
 if (vvi[0][0] != 26 or vvi[0][1] != 36 or
     vvi[1][0] != 56 or vvi[1][1] != 66) :
   print("Wrong VectorVectorInt Reference Out!")
+vvi.clear()
+vvi.push_back(swigex.VectorInt([100,101,102]))
+vvi = a.testVVectorInt(vvi)
+vvi = a.testVVectorInt([[100,101,102]])
 a.testVVectorIntRefDef()
 a.testVVectorIntRefDef((3))
 a.testVVectorIntRefDef(np.array([]))

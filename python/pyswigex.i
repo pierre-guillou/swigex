@@ -10,6 +10,16 @@
 //    Specific typemaps and fragments for Python language   //
 //////////////////////////////////////////////////////////////
 
+// Include numpy interface for creating arrays
+
+%{
+  #define SWIG_FILE_WITH_INIT
+%}
+%include numpy.i
+%init %{
+  import_array(); // Mandatory for using PyArray_* functions
+%}
+
 %begin %{
 // For converting NumPy integers to C++ integers
 // https://github.com/swig/swig/issues/888
@@ -211,16 +221,6 @@
   $1 = SWIG_CheckState(isStringVector($input));
 }
 
-// Include numpy interface for creating arrays
-
-%{
-  #define SWIG_FILE_WITH_INIT
-%}
-%include numpy.i
-%init %{
-  import_array(); // Mandatory for using PyArray_* functions
-%}
-
 %fragment("FromCpp", "header")
 {
   template <typename Type> NPY_TYPES numpyType();
@@ -406,6 +406,7 @@ import swigex as se
 import numpy as np
 import sys
 
+## Version and authors
 from swigex.version import __version__
 from swigex.version import __author__
 

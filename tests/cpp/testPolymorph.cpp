@@ -1,25 +1,21 @@
 #include "polymorph.hpp"
 #include "stdoutredirect.hpp"
 
-#include <iostream>
-
-class ChildTwo : public AParent
+class ChildTwo : public ParentBase
 {
 public:
-  ChildTwo(): AParent() {}
+  ChildTwo(): ParentBase() {}
   virtual ~ChildTwo() {}
 
   virtual String getHello() const override { return "ChildTwo in C++ - Hello"; }
-
-  //virtual ICloneable* clone() const override { return new ChildTwo(); }
 };
 
 int main()
 {
   StdoutRedirect sr("testPolymorph.out");
   
-  // AParent pa;
-  // showHello(&pa);
+  ParentBase pa;
+  showHello(&pa);
   ChildOne co;
   showHello(&co);
   ChildTwo ct;

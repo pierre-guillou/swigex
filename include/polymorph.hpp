@@ -4,36 +4,21 @@
 #include "swigex_define.hpp"
 
 /**
- * Parent base class for testing polymorphism in target language
- */
-class SWIGEX_EXPORT ICloneable
-{
-  public:
-  ICloneable() {};
-  virtual ~ICloneable() {};
-
-  //virtual ICloneable* clone() const = 0;
-};
-
-/**
  * Base class for testing polymorphism in target language
  */
-class SWIGEX_EXPORT AParent : public ICloneable
+class SWIGEX_EXPORT ParentBase
 {
   public:
-    AParent() {};
-    virtual ~AParent() {};
+    ParentBase() {};
+    virtual ~ParentBase() {};
 
     virtual String getHello() const { return "Hello"; }
-
-    // This class AParent is still pure abstract
-    //virtual ICloneable* clone() const override { return new AParent(); }
 };
 
 /**
  * Concrete class for testing polymorphism in target language
  */
-class SWIGEX_EXPORT ChildOne : public AParent
+class SWIGEX_EXPORT ChildOne : public ParentBase
 {
   public:
     ChildOne() {};
@@ -45,6 +30,6 @@ class SWIGEX_EXPORT ChildOne : public AParent
 };
 
 /// Global function for testing polymorphism
-SWIGEX_EXPORT void showHello(const AParent* parent);
+SWIGEX_EXPORT void showHello(const ParentBase* parent);
 
 

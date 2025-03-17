@@ -1,14 +1,14 @@
 library(swigex)
 
-#pa = AParent() # AParent is a pure abstract class
-#invisible(showHello(pa))
+pa = ParentBase()
+invisible(showHello(pa))
 
 co = ChildOne()
 invisible(showHello(co))
 
-# TODO : Cannot inherits from AParent in R
-#ct = AParent()
-#class(ct) <- c("ChildTwo", "AParent")
+# TODO : Cannot inherits from ParentBase in R
+#ct = ParentBase()
+#class(ct) <- c("ChildTwo", "ParentBase")
 #getHello.ChildTwo <- function(obj)
 #{
 #  return("ChildTwo - Hello")

@@ -1,5 +1,4 @@
-%feature(director) ICloneable;
-%feature(director) AParent;
+%feature(director) ParentBase;
 
 %{
   #include "swigex_export.hpp"
@@ -37,21 +36,36 @@
                                double,
                                String
 {
-  int errcode = convertToCpp($input, $1);
-  if (!SWIG_IsOK(errcode))
-    %argument_fail(errcode, "$type", $symname, $argnum);
+  try
+  {
+    int errcode = convertToCpp($input, $1);
+    if (!SWIG_IsOK(errcode))
+      %argument_fail(errcode, "$type", $symname, $argnum);
+  }
+  catch(...)
+  {
+    std::cerr << "Error while converting argument #$argnum of type '$type' in '$symname' function";
+  }
 }
 
 // Convert scalar argument by reference
+// Don't add String or char here otherwise "res2 not declared" / "alloc1 not declared"
 %typemap(in, fragment="ToCpp") int*       (int val), const int*       (int val),
                                int&       (int val), const int&       (int val),
                                double* (double val), const double* (double val),
-                               double& (double val), const double& (double val) // Don't add String here otherwise "res2 not declared"
+                               double& (double val), const double& (double val)
 {
-  int errcode = convertToCpp($input, val);
-  if (!SWIG_IsOK(errcode))
-    %argument_fail(errcode, "$type", $symname, $argnum);
-  $1 = &val;
+  try
+  {
+    int errcode = convertToCpp($input, val);
+    if (!SWIG_IsOK(errcode))
+      %argument_fail(errcode, "$type", $symname, $argnum);
+    $1 = &val;
+  }
+  catch(...)
+  {
+    std::cerr << "Error while converting argument #$argnum of type '$type' in '$symname' function";
+  }
 }
 
 %typemap(in, fragment="ToCpp") VectorInt    (void *argp),
@@ -179,7 +193,7 @@
 
 ////////////////////////////////////////////////
 // Conversion C++ => Target language
-
+//
 // Note : Before including this file :
 //        - vectorFromCpp, vectorVectorFromCpp and objectFromCpp 
 //          functions must be defined in FromCpp fragment
