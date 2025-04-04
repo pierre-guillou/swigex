@@ -33,7 +33,7 @@ Test VectorVectorInt: [[26 36] [56 66]]
 Test VectorVectorInt Reference: [[26 36] [56 66]]
 Test VectorVectorInt Pointer: [[26 36] [56 66]]
 Test VectorVectorInt Reference Out: [[26 36] [56 66]]
-_p_VectorTT_VectorNumTT_int_t_t 
+_p_VectorTT_VectorInt_t 
 Test VectorVectorInt: [[100 101 102]]
 Test VectorVectorInt: [[100 101 102]]
 Test double: 12.1
@@ -70,7 +70,7 @@ Test VectorVectorDouble: [[26.3 36.3] [56.3 66.3]]
 Test VectorVectorDouble Reference: [[26.3 36.3] [56.3 66.3]]
 Test VectorVectorDouble Pointer: [[26.3 36.3] [56.3 66.3]]
 Test VectorVectorDouble Reference Out: [[26.3 36.3] [56.3 66.3]]
-_p_VectorTT_VectorNumTT_double_t_t 
+_p_VectorTT_VectorDouble_t 
 Test String: Str12
 character
 Test String Reference: Str22
@@ -88,7 +88,7 @@ Test VectorString: [Str26 Str36]
 Test VectorString Reference: [Str26 Str36]
 Test VectorString Reference: [Str26 Str36]
 Test VectorString Reference Out: [Str26 Str36]
-_p_VectorTT_std__string_t
+_p_VectorTT_String_t
 Test double: -999.999
 [1] NA
 Test double: -999.999
