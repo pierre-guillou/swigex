@@ -22,7 +22,8 @@ env:
   BUILD_DIR : build
   PYTHON_VERSION : "3.11"
   R_VERSION : "4.3.2"
-  SWIG_ROOT : ${{github.workspace}}/swig_420b
+  SWIG_ROOT : ${{github.workspace}}/swig
+  LLVM_ROOT : /opt/homebrew
 
 jobs:
   build:
@@ -30,6 +31,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        brew install llvm
+        brew install bison
+        echo "$(brew --prefix bison)/bin" >> $GITHUB_PATH
 
     - name: Setup Python Version
       uses: actions/setup-python@v5
