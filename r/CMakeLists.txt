@@ -58,8 +58,8 @@ add_custom_target(r_doc
   VERBATIM
 )
 
-# Tell that we need to generate doxymentation before building R package
-if (BUILD_DOXYGEN)
+# Tell that we need to generate doxymentation before building R package (if required)
+if (BUILD_DOC)
   add_dependencies(r_doc doxygen)
 endif()
 
@@ -145,7 +145,7 @@ target_include_directories(r_build PRIVATE ${R_INCLUDE_DIRS})
 target_link_libraries(r_build PRIVATE ${R_LIBRARIES})
 
 # Tell that we need to generate Rd files before building R package (if required)
-if (BUILD_DOXYGEN)
+if (BUILD_DOC)
   add_dependencies(r_build r_doc)
 endif()
 

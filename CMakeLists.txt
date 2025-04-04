@@ -78,9 +78,9 @@ get_property(IS_MULTI_CONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
 #set(CMAKE_FIND_DEBUG_MODE TRUE)
 
 # Options
-option(BUILD_PYTHON  "Build Python package"        OFF)
-option(BUILD_R       "Build R package"             OFF)
-option(BUILD_DOXYGEN "Build Doxygen documentation" OFF)
+option(BUILD_PYTHON  "Build Python package"                     OFF)
+option(BUILD_R       "Build R package"                          OFF)
+option(BUILD_DOC     "Build Doxygen and packages documentation" OFF)
 if (MINGW)
   set(BUILD_PYTHON OFF)
 endif()
@@ -89,7 +89,7 @@ if (MSVC)
 endif()
 message(STATUS "BUILD_PYTHON="  ${BUILD_PYTHON})
 message(STATUS "BUILD_R="       ${BUILD_R})
-message(STATUS "BUILD_DOXYGEN=" ${BUILD_DOXYGEN})
+message(STATUS "BUILD_DOC="     ${BUILD_DOC})
 
 ####################################################
 ## BUILD & INSTALL

@@ -53,6 +53,7 @@
 #  - BUILD_DIR=<path>   Define a specific build directory (default =build[_msys])
 #  - BUILD_PYTHON=1     Configure cmake to build python wrapper (default =0, see target python_*)
 #  - BUILD_R=1          Configure cmake to build R wrapper (default =0, see target r_*)
+#  - BUILD_DOC=1        Configure cmake to build documentation (default =1)
 #  - TEST=<test-target> Name of the test target to be launched (e.g. test_Model_py)
 #
 # Usage example:
@@ -60,22 +61,13 @@
 #  make check N_PROC=2
 #
 
-ifndef BUILD_PYTHON
-  BUILD_PYTHON = 0
+ifndef BUILD_DOC
+  BUILD_DOC = 1
 endif
-ifeq ($(BUILD_PYTHON), 1)
-  BUILD_PYTHON = ON
+ifeq ($(BUILD_DOC), 1)
+  BUILD_DOC = ON
  else
-  BUILD_PYTHON = OFF 
-endif
-
-ifndef BUILD_R
-  BUILD_R = 0
-endif
-ifeq ($(BUILD_R), 1)
-  BUILD_R = ON
- else
-  BUILD_R = OFF 
+  BUILD_DOC = OFF 
 endif
 
 ifeq ($(OS),Windows_NT)
@@ -96,7 +88,7 @@ endif
 ifeq ($(DEBUG), 1)
   BUILD_TYPE = Debug
  else
-  BUILD_TYPE = Release 
+  BUILD_TYPE = Release
 endif
 
 ifndef BUILD_DIR
@@ -118,44 +110,43 @@ ifdef N_PROC
 else
   N_PROC_OPT = -j1 | tee /dev/null
 endif
-# Add  "| tee /dev/null" because Ninja prints output in a signe line :
+# Add  "| tee /dev/null" because Ninja prints output in a single line :
 # https://stackoverflow.com/questions/46970462/how-to-enable-multiline-logs-instead-of-single-line-progress-logs
 
-
-CMAKE_DEFINES = -DCMAKE_BUILD_TYPE=$(BUILD_TYPE)
+CMAKE_DEFINES := -DCMAKE_BUILD_TYPE=$(BUILD_TYPE)
 
 .PHONY: all cmake cmake-python cmake-r cmake-python-r cmake-doxygen cmake-python-doxygen cmake-r-doxygen cmake-python-r-doxygen print_version static shared build_tests doxygen install uninstall
 
 all: shared install
 
 cmake:
-	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=$(BUILD_PYTHON) -DBUILD_R=$(BUILD_R)
+	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_DOC=$(BUILD_DOC)
 
 cmake-python:
-	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=ON              -DBUILD_R=$(BUILD_R)
+	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_DOC=$(BUILD_DOC) -DBUILD_PYTHON=ON
 
 cmake-r:
-	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=$(BUILD_PYTHON) -DBUILD_R=ON
+	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_DOC=$(BUILD_DOC) -DBUILD_R=ON
 
 cmake-python-r:
-	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=ON              -DBUILD_R=ON
+	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_DOC=$(BUILD_DOC) -DBUILD_PYTHON=ON -DBUILD_R=ON
 
 cmake-doxygen:
-	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=$(BUILD_PYTHON) -DBUILD_R=$(BUILD_R) -DBUILD_DOXYGEN=ON
+	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_DOC=ON
 
 cmake-python-doxygen:
-	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=ON              -DBUILD_R=$(BUILD_R) -DBUILD_DOXYGEN=ON
+	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_DOC=ON -DBUILD_PYTHON=ON
 
 cmake-r-doxygen:
-	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=$(BUILD_PYTHON) -DBUILD_R=ON         -DBUILD_DOXYGEN=ON
+	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_DOC=ON -DBUILD_R=ON
 
 cmake-python-r-doxygen:
-	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=ON              -DBUILD_R=ON         -DBUILD_DOXYGEN=ON
+	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_DOC=ON -DBUILD_PYTHON=ON -DBUILD_R=ON
 
 print_version: cmake
 	@cmake --build $(BUILD_DIR) --target print_version --
 
-static shared build_tests install uninstall: cmake-doxygen
+static shared build_tests doxygen install uninstall: cmake-doxygen
 	@cmake --build $(BUILD_DIR) --target $@ -- $(N_PROC_OPT)
 
 
@@ -168,7 +159,7 @@ python_doc: cmake-python-doxygen
 python_build: cmake-python
 	@cmake --build $(BUILD_DIR) --target python_build -- $(N_PROC_OPT)
 
-python_install: cmake-python
+python_install: python_build
 	@cmake --build $(BUILD_DIR) --target python_install -- $(N_PROC_OPT)
 
 

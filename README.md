@@ -123,7 +123,7 @@ Rscript -e 'install.packages(c("roxygen2", "knitr", "callr"),repos="https://clou
 The Doxygen HTML documentation is optional (not included in the installation by default). If you want to generate it, execute the command:
 
 ```
-cmake -Bbuild -S. -DBUILD_DOXYGEN=ON
+cmake -Bbuild -S. -DBUILD_DOC=ON
 cmake --build build --target doxygen
 ```
 

@@ -41,7 +41,7 @@ add_custom_target(python_doc
 )
 
 # Tell that we need to generate doxymentation before building python package
-if (BUILD_DOXYGEN)
+if (BUILD_DOC)
   add_dependencies(python_doc doxygen)
 endif()
 
@@ -147,7 +147,7 @@ if (MSVC OR APPLE)
 endif()
 
 # Tell that we need to generate docstring files before building python package (if required)
-if (BUILD_DOXYGEN)
+if (BUILD_DOC)
   add_dependencies(python_build python_doc)
 endif()
 
