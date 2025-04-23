@@ -44,8 +44,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -yq \
-          doxygen
+        sudo apt-get install -yq doxygen
 
     - name: Setup R Version
       uses: r-lib/actions/setup-r@v2

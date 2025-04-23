@@ -51,8 +51,8 @@ jobs:
 
     - name: Install dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install -yq doxygen
+        apt-get update
+        apt-get install -yq doxygen
 
     - name: Register the python version
       run: |

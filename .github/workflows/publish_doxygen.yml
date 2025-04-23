@@ -38,8 +38,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -yq \
-          doxygen
+        sudo apt-get install -yq doxygen
 
     - name: Configure build directory
       run: |
