@@ -51,7 +51,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        dnf update
+        dnf update -y
         dnf install -y doxygen
 
     - name: Register the python version
