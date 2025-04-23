@@ -38,12 +38,6 @@ jobs:
       with:
         r-version: ${{env.R_VERSION}}
 
-    - name: Install roxygen2
-      uses: r-lib/actions/setup-r-dependencies@v2
-      with:
-        packages: roxygen2
-        install-pandoc: false
-
     - name: Install the customized SWIG from source
       uses: fabien-ors/install-swig-windows-action@v2
       with:

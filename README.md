@@ -1,7 +1,7 @@
 # swigex C++ Library and Wrappers
 
 * Author: Fabien Ors (MINES Paris - PSL University) 
-* Date: July 2024
+* Date: April 2025
 
 The *swigex* C++ library is a derivative work based on the *swigex0* project: [https://github.com/fabien-ors/swigex0](https://github.com/fabien-ors/swigex0)
 
@@ -41,7 +41,7 @@ From a shell command prompt:
 ### R Package
 From an R command prompt:
 
-    install.package("swigex", repos="https://fabien-ors.github.io/drat/")
+    install.package("swigex", repos="https://soft.mines-paristech.fr/cran")
 
 ## Usage
 This library implements a Fibonacci list C++ object exported to Python and R via SWIG using numerical vector class. Here is an example usage in Python:
@@ -53,7 +53,7 @@ This library implements a Fibonacci list C++ object exported to Python and R via
 
 ## Install from source
 
-This library has been successfully tested with Ubuntu 16/18/20 LTS and Windows 10 (MacOS: not tested).
+This library has been successfully tested with Ubuntu 20/22/24 LTS, Windows 10 and MacOS.
 
 For installing from source, you must follow instructions from [https://github.com/fabien-ors/swigex0](https://github.com/fabien-ors/swigex0).
 
@@ -79,14 +79,10 @@ brew install doxygen
 python3 -m pip install numpy notebook nbconvert
 Rscript -e 'install.packages(c("roxygen2", "knitr", "callr"),repos="https://cloud.r-project.org")'
 ```
-
-Notes:
-
-* These instructions for MacOS are currently not tested - above packages may not exist
   
 ### Windows - Microsoft Visual Studio
 
-These requirements are recommended to people who wants to compile *swigex* Python package. If you want to compile *swigex* R package under Windows, you should look at the next section.
+These requirements are also recommended to people who wants to compile *swigex* Python package. If you want to compile *swigex* R package under Windows, you should look at the next section.
 
 #### Install additionnal tools
 
@@ -107,7 +103,7 @@ The *Path* environment variable (*System variables*) must be updated to make *do
 2. Restart Windows
 
 
-### Windows - MinGW (via RTools):
+### Windows - MinGW (via RTools)
 
 These requirements are recommended to people who wants to compile *swigex* R package. If you want to compile *swigex* Python package under Windows, you should look at the previous section. This is not the only way to install MinGW. But using MinGW provided with RTools permits us to also handle *swigex* R package compilation.
 
@@ -155,4 +151,5 @@ If you experience the following error while importing *swigex* Package under Pyt
 
 ## License
 MIT
-2024 Fabien Ors
+
+2025 Fabien Ors

@@ -21,7 +21,7 @@ math(EXPR Python3_NumPy_NEXT_MAJOR "${Python3_NumPy_VERSION_MAJOR} + 1")
 find_package(SWIG 4.0 REQUIRED)
 include(${SWIG_USE_FILE})
 
-######################################  
+######################################
 # DOCUMENTATION
 
 # Ensure documentation.i is existing
@@ -122,10 +122,11 @@ target_link_libraries(python_build PUBLIC Python3::NumPy)
 
 # Transmit the fact that we are linking to static ${PROJECT_NAME} library
 set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE")
+# SWIG generated code warnings
 if (MSVC)
-  set(COMP_FLAGS "${COMP_FLAGS} /wd4706 /wd4456 /wd4127 /wd4100") # SWIG generated code warnings
-else ()
-  set(COMP_FLAGS "${COMP_FLAGS} -Wno-unused-parameter -Wno-free-nonheap-object") # Prevent some SWIG C++/Python warnings
+  set(COMP_FLAGS "${COMP_FLAGS} /wd4706 /wd4456 /wd4127 /wd4100")
+else()
+  set(COMP_FLAGS "${COMP_FLAGS} -Wno-unused-parameter -Wno-free-nonheap-object")
 endif()
 
 # Set some properties on SWIG target
@@ -201,7 +202,7 @@ file(GENERATE
 # INSTALLATION
 
 # Add a custom target for python package installation
-# TODO: Do also installation each time setup.py.in or README.md is modified
+# TODO: Do also installation each time python/README.md and above files are modified
 add_custom_target(python_install
   COMMAND ${Python3_EXECUTABLE} -m pip install ${PYTHON_PACKAGE_ROOT_FOLDER}
   COMMENT "Installing python package"
@@ -210,3 +211,4 @@ add_custom_target(python_install
 
 # Tell to CMake that python package must be built before installation
 add_dependencies(python_install python_build)
+

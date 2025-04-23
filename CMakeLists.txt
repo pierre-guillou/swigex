@@ -4,7 +4,7 @@
 #
 #                   Author: Fabien Ors (MINES Paris - PSL) 
 #                   License: MIT
-#                   Date: July 2024
+#                   Date: April 2025
 #
 #
 # 1. Configure project :
@@ -40,7 +40,7 @@ cmake_minimum_required(VERSION 3.20)
 
 # Define project here
 project(swigex
-        VERSION      0.2.2
+        VERSION      0.2.3
         DESCRIPTION  "C++ library and SWIG wrappers (R & Python)"
         HOMEPAGE_URL "https://github.com/fabien-ors/swigex"
         LANGUAGES    C CXX) # Enable C language for third party libraries
@@ -78,6 +78,7 @@ get_property(IS_MULTI_CONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
 #set(CMAKE_FIND_DEBUG_MODE TRUE)
 
 # Options
+# By default, deactivate R and python packages
 option(BUILD_PYTHON  "Build Python package"                     OFF)
 option(BUILD_R       "Build R package"                          OFF)
 option(BUILD_DOC     "Build Doxygen and packages documentation" OFF)

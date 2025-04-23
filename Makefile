@@ -53,7 +53,7 @@
 #  - BUILD_DIR=<path>   Define a specific build directory (default =build[_msys])
 #  - BUILD_PYTHON=1     Configure cmake to build python wrapper (default =0, see target python_*)
 #  - BUILD_R=1          Configure cmake to build R wrapper (default =0, see target r_*)
-#  - BUILD_DOC=1        Configure cmake to build documentation (default =1)
+#  - BUILD_DOC=1        Configure cmake to build documentation (default =0)
 #  - TEST=<test-target> Name of the test target to be launched (e.g. test_Model_py)
 #
 # Usage example:
@@ -61,9 +61,6 @@
 #  make check N_PROC=2
 #
 
-ifndef BUILD_DOC
-  BUILD_DOC = 1
-endif
 ifeq ($(BUILD_DOC), 1)
   BUILD_DOC = ON
  else
@@ -150,13 +147,12 @@ static shared build_tests doxygen install uninstall: cmake-doxygen
 	@cmake --build $(BUILD_DIR) --target $@ -- $(N_PROC_OPT)
 
 
-
 .PHONY: python_doc python_build python_install
 
 python_doc: cmake-python-doxygen
 	@cmake --build $(BUILD_DIR) --target python_doc -- $(N_PROC_OPT)
 
-python_build: cmake-python
+python_build: python_doc
 	@cmake --build $(BUILD_DIR) --target python_build -- $(N_PROC_OPT)
 
 python_install: python_build
@@ -168,7 +164,7 @@ python_install: python_build
 r_doc: cmake-r-doxygen
 	@cmake --build $(BUILD_DIR) --target r_doc -- $(N_PROC_OPT)
 
-r_build: cmake-r
+r_build: r_doc
 	@cmake --build $(BUILD_DIR) --target r_build -- $(N_PROC_OPT)
 
 r_install: r_build
@@ -186,19 +182,19 @@ check_py: cmake-python
 check_r: cmake-r
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_r -- $(N_PROC_OPT)
 
-check: cmake-python-r-doxygen
+check: cmake-python-r
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check -- $(N_PROC_OPT)
 
-check_ipynb: cmake-python-doxygen
+check_ipynb: cmake-python
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_ipynb -- $(N_PROC_OPT)
 
-check_rmd: cmake-r-doxygen
+check_rmd: cmake-r
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_rmd -- $(N_PROC_OPT)
 
 check_test: cmake-python-r
 	@cd $(BUILD_DIR); CTEST_OUTPUT_ON_FAILURE=1 ctest -R $(TEST)
 
-build_demos: cmake-python-r-doxygen
+build_demos: cmake-python-r
 	@cmake --build $(BUILD_DIR) --target build_demos -- $(N_PROC_OPT)
 
 .PHONY: clean clean_all
