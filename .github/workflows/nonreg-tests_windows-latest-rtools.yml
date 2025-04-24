@@ -40,7 +40,7 @@ jobs:
 
     - name: Test update of pacman
       run: |
-        pacman -Syu
+        pacman -Syu --noconfirm
 
     - name: Install the customized SWIG from source
       uses: fabien-ors/install-swig-windows-action@v2
