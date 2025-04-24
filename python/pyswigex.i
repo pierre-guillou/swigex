@@ -43,9 +43,9 @@
   #define NPY_INT_OUT_TYPE   int64_t
   #define NPY_INT_NA         std::numeric_limits<NPY_INT_OUT_TYPE>::min()
 #endif
-%}
 
 #define NPY_DOUBLE_NA        std::numeric_limits<double>::quiet_NaN()
+%}
 
 %fragment("ToCpp", "header")
 {
@@ -282,7 +282,7 @@
     int myres = SWIG_TypeError;
     using SizeType = typename Vector::size_type;
     using InputType = typename Vector::value_type;
-    
+
     // Conversion
     if (hasFixedSize<InputType>()) // Convert to 1D NumPy array
     {

@@ -25,7 +25,7 @@ include(${SWIG_USE_FILE})
 # DOCUMENTATION
 
 # Ensure documentation.i is existing
-# TODO : put documentation.i out of the source (be careful of pyswigex.i)
+# TODO : put documentation.i out of the source (be careful of pyswigex.i)
 add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/doc/documentation.i
   COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_CURRENT_SOURCE_DIR}/doc/documentation.i
   COMMENT "Ensure that documentation.i exists")
@@ -49,7 +49,7 @@ endif()
 # WRAPPER GENERATION & BUILD
 
 # Python package interface file
-set(SRC pyswigex.i) 
+set(SRC pyswigex.i)
 
 # Generation folders
 if (IS_MULTI_CONFIG)
