@@ -38,10 +38,6 @@ jobs:
       with:
         r-version: ${{env.R_VERSION}}
 
-    - name: Test update of pacman
-      run: |
-        pacman -Syu --noconfirm
-
     - name: Install the customized SWIG from source
       uses: fabien-ors/install-swig-windows-action@v2
       with:
