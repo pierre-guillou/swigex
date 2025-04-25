@@ -80,7 +80,6 @@ foreach(FLAVOR ${FLAVORS})
   
   # Set library version
   set_target_properties(${FLAVOR} PROPERTIES VERSION ${PROJECT_VERSION})
-  
 endforeach(FLAVOR ${FLAVORS})
 ############################## End loop on flavors
 
