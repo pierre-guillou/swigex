@@ -56,9 +56,9 @@ jobs:
           -B${{ env.BUILD_DIR }} \
           -DBUILD_PYTHON=ON \
 
-    - name: Build the package
+    - name: Build and Install the package
       run: |
-        cmake --build ${{env.BUILD_DIR}} --parallel 3
+        cmake --build ${{env.BUILD_DIR}} --parallel 3 --target python_install
 
     - name: Execute Python demos and courses
       run: |

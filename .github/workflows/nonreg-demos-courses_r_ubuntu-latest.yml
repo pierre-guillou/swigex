@@ -35,6 +35,12 @@ jobs:
       with:
         r-version: ${{env.R_VERSION}}
 
+    - name: Install R dependencies
+      uses: r-lib/actions/setup-r-dependencies@v2
+      with:
+        packages: knitr, callr
+        install-pandoc: false
+
     - name: Install the customized SWIG from source
       uses: fabien-ors/install-swig-unix-action@v1
       with:
@@ -48,11 +54,11 @@ jobs:
           -DBUILD_R=ON \
           -DSWIG_EXECUTABLE=${{env.SWIG_ROOT}}/bin/swig
 
-    - name: Build the package
+    - name: Build and Install the package
       run: |
-        cmake --build ${{env.BUILD_DIR}} --parallel 3
+        cmake --build ${{env.BUILD_DIR}} --parallel 3 --target r_install
 
-    - run: curl -sSf https://sshx.io/get | sh -s run
+    #- run: curl -sSf https://sshx.io/get | sh -s run
 
     - name: Execute R demos and courses
       run: |
