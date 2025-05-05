@@ -58,8 +58,6 @@ jobs:
       run: |
         cmake --build ${{env.BUILD_DIR}} --parallel 3 --target r_build
 
-    #- run: curl -sSf https://sshx.io/get | sh -s run
-
     - name: Execute R demos and courses
       run: |
         cmake --build ${{env.BUILD_DIR}} --parallel 3 --target check_rmd
