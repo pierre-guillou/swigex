@@ -12,8 +12,11 @@ class SWIGEX_EXPORT TypeClass
 public:
   TypeClass();
   ~TypeClass();
+  
+  void activateDisplay() { _display = true; }                                                  //   OK        OK
+  void deactivateDisplay() { _display = false; }                                               //   OK        OK
+  
 //                                                                                     //   R         Python
-
   int testInt(int a);                                                                  //   OK        OK
   const int& testIntRef(const int& a);                                                 //   OK        OK
   const int* testIntPtr(const int* a);                                                 //   ## NOK    OK
@@ -81,6 +84,7 @@ public:
   void testStringOverload(const VectorString& a) const;                                //   ## NOK    OK
 
 private:
+  bool               _display;
   int                _varInt;
   double             _varDouble;
   String             _varString;
