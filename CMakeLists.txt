@@ -47,7 +47,7 @@ project(swigex
 #set (PROJECT_VERSION_SUFFIX )   # Release
 #set (PROJECT_VERSION_SUFFIX a1)  # Alpha1
 #set (PROJECT_VERSION_SUFFIX b1)  # Beta1
-set (PROJECT_VERSION_SUFFIX rc1) # Release Candidate1
+#set (PROJECT_VERSION_SUFFIX rc1) # Release Candidate1
 
 # Build the full version
 set (PROJECT_FULL_VERSION "${PROJECT_VERSION}${PROJECT_VERSION_SUFFIX}")
