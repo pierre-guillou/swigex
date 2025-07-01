@@ -18,6 +18,9 @@ on:
         required: false
         default: false
 
+env:
+  BUILD_DIR : build
+
 jobs:
   call-python-macos:
     uses: ./.github/workflows/publish_python_macos.yml
@@ -65,9 +68,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - uses: actions/checkout@v4
+
     - name: Define the CRAN path on our server
       run: |
-        cmake --build ${{env.BUILD_DIR}} --parallel 3 --target build_demos
+        cmake -B${{env.BUILD_DIR}} -DBUILD_PYTHON=OFF -DBUILD_R=OFF
         PROJECT_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_VERSION | cut -d "=" -f2 | xargs)
         PROJECT_FULL_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_FULL_VERSION | cut -d "=" -f2 | xargs)
         if [ "${{PROJECT_VERSION}}" == "${{PROJECT_FULL_VERSION}}" ]; then
