@@ -60,12 +60,6 @@ jobs:
       with:
         r-version: ${{env.R_VERSION}}
 
-    - name: Install R dependencies
-      uses: r-lib/actions/setup-r-dependencies@v2
-      with:
-        packages: knitr
-        install-pandoc: false
-
     - name: Install the customized SWIG from source
       uses: fabien-ors/install-swig-unix-action@v1
       with:
@@ -108,7 +102,7 @@ jobs:
     steps:
       - env:
           PROJECT_FULL_VERSION: ${{needs.build.outputs.project_full_version}}
-          
+
         uses: fabien-ors/folder-publish-action@v4
         with:
           host: ${{ secrets.CG_HOST }}
