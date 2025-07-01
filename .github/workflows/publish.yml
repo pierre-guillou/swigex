@@ -37,8 +37,12 @@ jobs:
         cmake --build ${{env.BUILD_DIR}} --parallel 3 --target build_demos
         PROJECT_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_VERSION | cut -d "=" -f2 | xargs)
         PROJECT_FULL_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_FULL_VERSION | cut -d "=" -f2 | xargs)
-        CRAN_PATH="/var/www/html/cran"
-        echo "CRAN_PATH=${{CRAN_PATH}}" >> "$GITHUB_OUTPUT"
+        if [ "${PROJECT_VERSION}" == "${PROJECT_FULL_VERSION}" ]; then
+          CRAN_PATH=/var/www/html/cran
+        else
+          CRAN_PATH=/var/www/html/cran/prerelease
+        fi
+        echo "CRAN_PATH=${CRAN_PATH}" >> "$GITHUB_OUTPUT"
 
   call-python-macos:
     uses: ./.github/workflows/publish_python_macos.yml
