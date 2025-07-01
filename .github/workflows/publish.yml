@@ -35,7 +35,6 @@ jobs:
       id: main_step
       run: |
         cmake -B${{env.BUILD_DIR}} -DBUILD_PYTHON=OFF -DBUILD_R=OFF
-        cmake --build ${{env.BUILD_DIR}} --parallel 3 --target build_demos
         PROJECT_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_VERSION | cut -d "=" -f2 | xargs)
         PROJECT_FULL_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_FULL_VERSION | cut -d "=" -f2 | xargs)
         if [ "${PROJECT_VERSION}" == "${PROJECT_FULL_VERSION}" ]; then
@@ -65,7 +64,7 @@ jobs:
     secrets: inherit
 
   call-python-publish:
-    needs: [call-python-macos, call-python-windows, call-python-linux, call-r-macos, call-r-windows, call-r-linux]
+    needs: [define_cran_path, call-python-macos, call-python-windows, call-python-linux, call-r-macos, call-r-windows, call-r-linux]
     if: ${{ (inputs.dry_publish == false) && (github.event_name != 'schedule') }}
 
     runs-on: ubuntu-latest
@@ -84,7 +83,7 @@ jobs:
           name: "*python-package*"
 
   call-r-publish:
-    needs: [call-python-macos, call-python-windows, call-python-linux, call-r-macos, call-r-windows, call-r-linux]
+    needs: [define_cran_path, call-python-macos, call-python-windows, call-python-linux, call-r-macos, call-r-windows, call-r-linux]
     if: ${{ (inputs.dry_publish == false) && (github.event_name != 'schedule') }}
     
     # Only ubuntu can upload to CRAN easily (ssh)
