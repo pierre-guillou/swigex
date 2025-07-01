@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       # https://docs.github.com/en/actions/using-jobs/defining-outputs-for-jobs
-      project_version: ${{ steps.main_step.outputs.PROJECT_FULL_VERSION }}
+      project_full_version: ${{ steps.main_step.outputs.PROJECT_FULL_VERSION }}
 
     steps:
     - uses: actions/checkout@v4
@@ -107,7 +107,7 @@ jobs:
     
     steps:
       - env:
-          PROJECT_VERSION: ${{needs.build.outputs.project_version}}
+          PROJECT_FULL_VERSION: ${{needs.build.outputs.project_version}}
         uses: fabien-ors/folder-publish-action@v4
         with:
           host: ${{ secrets.CG_HOST }}
