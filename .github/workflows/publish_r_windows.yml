@@ -89,9 +89,9 @@ jobs:
       id: define_cran_path
       shell: powershell
       run: |
-        $versionOuput = cmake --build ${{env.BUILD_DIR}} --target print_version
-        $projectVersion = ($versionOutput | Select-String "PROJECT_VERSION" | ForEach-Object {($_ -split "=")[1].Trim()})[0]
-        $projectFullVersion = ($versionOutput | Select-String "PROJECT_FULL_VERSION" | ForEach-Object {($_ -split "=")[1].Trim()})[0]
+        $versionOutput = cmake --build ${{env.BUILD_DIR}} --target print_version
+        $projectVersion = $versionOutput | Select-String "PROJECT_VERSION" | ForEach-Object {($_ -split "=")[1].Trim()}
+        $projectFullVersion = $versionOutput | Select-String "PROJECT_FULL_VERSION" | ForEach-Object {($_ -split "=")[1].Trim()}
         if ($projectVersion -eq $projectFullVersion) {
             $cranPath = "/var/www/html/cran"
         } else {
