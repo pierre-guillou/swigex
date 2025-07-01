@@ -91,7 +91,7 @@ jobs:
     
     steps:
       - env:
-        CRAN_PATH: ${{needs.define_cran_path.outputs.cran_path}}
+          CRAN_PATH: ${{needs.define_cran_path.outputs.cran_path}}
 
         uses: fabien-ors/cran-publish-action@v4
         with:
