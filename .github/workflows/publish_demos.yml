@@ -60,6 +60,12 @@ jobs:
       with:
         r-version: ${{env.R_VERSION}}
 
+    - name: Install R dependencies
+      uses: r-lib/actions/setup-r-dependencies@v2
+      with:
+        packages: knitr, callr
+        install-pandoc: false
+
     - name: Install the customized SWIG from source
       uses: fabien-ors/install-swig-unix-action@v1
       with:
