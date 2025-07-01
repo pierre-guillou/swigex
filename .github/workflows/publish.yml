@@ -22,6 +22,28 @@ env:
   BUILD_DIR : build
 
 jobs:
+  define_cran_path:
+    runs-on: ubuntu-latest
+    outputs:
+      # https://docs.github.com/en/actions/using-jobs/defining-outputs-for-jobs
+      cran_path: ${{ steps.main_step.outputs.CRAN_PATH }}
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Define CRAN path on our server
+      id: main_step
+      run: |
+        cmake --build ${{env.BUILD_DIR}} --parallel 3 --target build_demos
+        PROJECT_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_VERSION | cut -d "=" -f2 | xargs)
+        PROJECT_FULL_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_FULL_VERSION | cut -d "=" -f2 | xargs)
+        if [ "${{PROJECT_VERSION}}" == "${{PROJECT_FULL_VERSION}}" ]; then
+          CRAN_PATH=/var/www/html/cran
+        else
+          CRAN_PATH=/var/www/html/cran/prerelease
+        fi
+        echo "CRAN_PATH=${{CRAN_PATH}}" >> "$GITHUB_OUTPUT"
+
   call-python-macos:
     uses: ./.github/workflows/publish_python_macos.yml
     secrets: inherit
@@ -68,19 +90,8 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Define the CRAN path on our server
-      run: |
-        cmake -B${{env.BUILD_DIR}} -DBUILD_PYTHON=OFF -DBUILD_R=OFF
-        PROJECT_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_VERSION | cut -d "=" -f2 | xargs)
-        PROJECT_FULL_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_FULL_VERSION | cut -d "=" -f2 | xargs)
-        if [ "${{PROJECT_VERSION}}" == "${{PROJECT_FULL_VERSION}}" ]; then
-          CRAN_PATH=/var/www/html/cran
-        else
-          CRAN_PATH=/var/www/html/cran/prerelease
-        fi
-        echo "CRAN_PATH=${{CRAN_PATH}}" >> "$GITHUB_OUTPUT"
+    - env:
+      CRAN_PATH: ${{needs.define_cran_path.outputs.cran_path}}
 
     - uses: fabien-ors/cran-publish-action@v4
       with:
