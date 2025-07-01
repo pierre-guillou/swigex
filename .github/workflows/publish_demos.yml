@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       # https://docs.github.com/en/actions/using-jobs/defining-outputs-for-jobs
-      project_version: ${{ steps.main_step.outputs.PROJECT_VERSION }}
+      project_version: ${{ steps.main_step.outputs.PROJECT_FULL_VERSION }}
 
     steps:
     - uses: actions/checkout@v4
@@ -88,9 +88,9 @@ jobs:
       id: main_step
       run: |
         cmake --build ${{env.BUILD_DIR}} --parallel 3 --target build_demos
-        PROJECT_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_VERSION | cut -d "=" -f2 | xargs)
+        PROJECT_FULL_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_FULL_VERSION | cut -d "=" -f2 | xargs)
         echo "DEMO_FOLDER=${{env.BUILD_DIR}}/demo" >> "$GITHUB_ENV"
-        echo "PROJECT_VERSION=${PROJECT_VERSION}" >> "$GITHUB_OUTPUT"
+        echo "PROJECT_FULL_VERSION=${PROJECT_FULL_VERSION}" >> "$GITHUB_OUTPUT"
 
     - uses: actions/upload-artifact@v4
       with:
@@ -113,7 +113,7 @@ jobs:
           host: ${{ secrets.CG_HOST }}
           username: ${{ secrets.CG_USR }}
           password: ${{ secrets.CG_PWD }}
-          dest-path: "/var/www/html/swigex/${{ env.PROJECT_VERSION }}"
+          dest-path: "/var/www/html/swigex/${{ env.PROJECT_FULL_VERSION }}"
 
       # Delete the artifacts (for freeing storage space under github)
       - uses: geekyeggo/delete-artifact@v5

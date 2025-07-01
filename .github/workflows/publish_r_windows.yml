@@ -35,6 +35,9 @@ jobs:
 
   build:
     runs-on: windows-2022
+    outputs:
+      # https://docs.github.com/en/actions/using-jobs/defining-outputs-for-jobs
+      project_version: ${{ steps.main_step.outputs.CRAN_PATH }}
     strategy:
       matrix:
         # Last releases from here https://cran.r-project.org/src/base/R-4/
@@ -81,6 +84,18 @@ jobs:
         cmake --build ${{env.BUILD_DIR}} --parallel 3 --target r_install
         $PKG_PATH = Get-ChildItem -Path "${{env.BUILD_DIR}}/r/${{env.CMAKE_BUILD_TYPE}}/swigex_*.zip" -File
         echo "MY_PKG=$PKG_PATH" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+
+    - name: Define the CRAN path on our server
+      run: |
+        cmake --build ${{env.BUILD_DIR}} --parallel 3 --target build_demos
+        PROJECT_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_VERSION | cut -d "=" -f2 | xargs)
+        PROJECT_FULL_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_FULL_VERSION | cut -d "=" -f2 | xargs)
+        if [ "${{PROJECT_VERSION}}" == "${{PROJECT_FULL_VERSION}}" ]; then
+          CRAN_PATH=/var/www/html/cran
+        else
+          CRAN_PATH=/var/www/html/cran/prerelease
+        fi
+        echo "CRAN_PATH=${{CRAN_PATH}}" >> "$GITHUB_OUTPUT"
 
     - name : Always show r_doc log
       if: success() || failure()
@@ -137,7 +152,7 @@ jobs:
         host: ${{secrets.CG_HOST}}
         username: ${{secrets.CG_USR}}
         password: ${{secrets.CG_PWD}}
-        repo-path: "/var/www/html/cran"
+        repo-path: ${{env.CRAN_PATH}}
 
     # Delete the artifacts (for freeing storage space under github)
     - uses: geekyeggo/delete-artifact@v5
