@@ -159,7 +159,7 @@ jobs:
 
     steps:
       - env:
-        CRAN_PATH: ${{needs.build.outputs.cran_path}}
+          CRAN_PATH: ${{needs.build.outputs.cran_path}}
 
         # Publish packages to our CRAN
         uses: fabien-ors/cran-publish-action@v4
