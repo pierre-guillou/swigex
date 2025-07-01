@@ -40,12 +40,12 @@ cmake_minimum_required(VERSION 3.20)
 
 # Define project here
 project(swigex
-        VERSION      0.2.5
+        VERSION      0.2.6
         DESCRIPTION  "C++ library and SWIG wrappers (R & Python)"
         HOMEPAGE_URL "https://github.com/fabien-ors/swigex"
         LANGUAGES    C CXX) # Enable C language for third party libraries
-#set (PROJECT_VERSION_SUFFIX )   # Release
-#set (PROJECT_VERSION_SUFFIX a1)  # Alpha1
+# Use one of the following lines if you want to deliver a pre-release
+set (PROJECT_VERSION_SUFFIX a1)  # Alpha1
 #set (PROJECT_VERSION_SUFFIX b1)  # Beta1
 #set (PROJECT_VERSION_SUFFIX rc1) # Release Candidate1
 
