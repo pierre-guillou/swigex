@@ -34,6 +34,7 @@ jobs:
     - name: Define CRAN path on our server
       id: main_step
       run: |
+        cmake -B${{env.BUILD_DIR}} -DBUILD_PYTHON=OFF -DBUILD_R=OFF
         cmake --build ${{env.BUILD_DIR}} --parallel 3 --target build_demos
         PROJECT_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_VERSION | cut -d "=" -f2 | xargs)
         PROJECT_FULL_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_FULL_VERSION | cut -d "=" -f2 | xargs)
