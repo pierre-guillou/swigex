@@ -90,18 +90,18 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - env:
-      CRAN_PATH: ${{needs.define_cran_path.outputs.cran_path}}
+      - env:
+        CRAN_PATH: ${{needs.define_cran_path.outputs.cran_path}}
 
-    - uses: fabien-ors/cran-publish-action@v4
-      with:
-        host: ${{secrets.CG_HOST}}
-        username: ${{secrets.CG_USR}}
-        password: ${{secrets.CG_PWD}}
-        repo-path: ${{env.CRAN_PATH}}
-        pattern: "*r-package*"
+        uses: fabien-ors/cran-publish-action@v4
+        with:
+          host: ${{secrets.CG_HOST}}
+          username: ${{secrets.CG_USR}}
+          password: ${{secrets.CG_PWD}}
+          repo-path: ${{env.CRAN_PATH}}
+          pattern: "*r-package*"
 
-    # Delete the artifacts (for freeing storage space under github)
-    - uses: geekyeggo/delete-artifact@v5
-      with:
-        name: "*r-package*"
+      # Delete the artifacts (for freeing storage space under github)
+      - uses: geekyeggo/delete-artifact@v5
+        with:
+          name: "*r-package*"
