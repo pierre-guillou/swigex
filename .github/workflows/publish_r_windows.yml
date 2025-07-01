@@ -87,15 +87,17 @@ jobs:
 
     - name: Define the CRAN path on our server
       id: define_cran_path
+      shell: powershell
       run: |
-        PROJECT_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_VERSION | cut -d "=" -f2 | xargs)
-        PROJECT_FULL_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_FULL_VERSION | cut -d "=" -f2 | xargs)
-        if [ "${PROJECT_VERSION}" == "${PROJECT_FULL_VERSION}" ]; then
-          CRAN_PATH=/var/www/html/cran
-        else
-          CRAN_PATH=/var/www/html/cran/prerelease
-        fi
-        echo "CRAN_PATH=${CRAN_PATH}" >> "$GITHUB_OUTPUT"
+        $versionOuput = cmake --build ${{env.BUILD_DIR}} --target print_version
+        $projectVersion = ($versionOutput | Select-String "PROJECT_VERSION" | ForEach-Object {($_ -split "=")[1].Trim()})[0]
+        $projectFullVersion = ($versionOutput | Select-String "PROJECT_FULL_VERSION" | ForEach-Object {($_ -split "=")[1].Trim()})[0]
+        if ($projectVersion -eq $projectFullVersion) {
+            $cranPath = "/var/www/html/cran"
+        } else {
+            $cranPath = "/var/www/html/cran/prerelease"
+        }
+        "CRAN_PATH=$cranPath" | Out-File -FilePath $GITHUB_OUTPUT -Encoding utf8 -Append
 
     - name : Always show r_doc log
       if: success() || failure()
