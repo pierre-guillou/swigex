@@ -65,12 +65,12 @@ jobs:
         cmake --build ${{env.BUILD_DIR}} --parallel 3 --target build_demos
         PROJECT_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_VERSION | cut -d "=" -f2 | xargs)
         PROJECT_FULL_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_FULL_VERSION | cut -d "=" -f2 | xargs)
-        if [ "${{PROJECT_VERSION}}" == "${{PROJECT_FULL_VERSION}}" ]; then
+        if [ "${PROJECT_VERSION}" == "${PROJECT_FULL_VERSION}" ]; then
           CRAN_PATH=/var/www/html/cran
         else
           CRAN_PATH=/var/www/html/cran/prerelease
         fi
-        echo "CRAN_PATH=${{CRAN_PATH}}" >> "$GITHUB_OUTPUT"
+        echo "CRAN_PATH=${CRAN_PATH}" >> "$GITHUB_OUTPUT"
 
     - name : Always show r_doc log
       if: success() || failure()
