@@ -97,7 +97,7 @@ jobs:
         } else {
             $cranPath = "/var/www/html/cran/prerelease"
         }
-        "CRAN_PATH=$cranPath" | Out-File -FilePath $GITHUB_OUTPUT -Encoding utf8 -Append
+        "CRAN_PATH=$cranPath" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
 
     - name : Always show r_doc log
       if: success() || failure()
