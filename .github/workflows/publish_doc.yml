@@ -55,6 +55,7 @@ jobs:
     steps:
       - env:
           PROJECT_FULL_VERSION: ${{needs.get-version.outputs.project_full_version}}
+          
         uses: fabien-ors/folder-publish-action@v4
         with:
           host: ${{ secrets.CG_HOST }}
