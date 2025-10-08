@@ -18,10 +18,10 @@
 // Mandatory for using swig::asptr and swig::from for std::vectors
 %include std_vector.i
 %include std_string.i
-%template(DoNotUseVectorIntStd)     std::vector< int >;
+%template(DoNotUseVectorIntStd)     std::vector< int64_t >;
 %template(DoNotUseVectorDoubleStd)  std::vector< double >;
 %template(DoNotUseVectorStringStd)  std::vector< std::string >; // Keep std::string here otherwise asptr fails!
-%template(DoNotUseVVectorIntStd)    std::vector< std::vector< int > >;
+%template(DoNotUseVVectorIntStd)    std::vector< std::vector< int64_t > >;
 %template(DoNotUseVVectorDoubleStd) std::vector< std::vector< double > >;
 
 ////////////////////////////////////////////////
@@ -32,7 +32,7 @@
 //          functions must be defined in ToCpp fragment
 
 // Convert scalar arguments by value
-%typemap(in, fragment="ToCpp") int,
+%typemap(in, fragment="ToCpp") int64_t,
                                double,
                                String
 {
@@ -50,8 +50,8 @@
 
 // Convert scalar argument by reference
 // Don't add String or char here otherwise "res2 not declared" / "alloc1 not declared"
-%typemap(in, fragment="ToCpp") int*       (int val), const int*       (int val),
-                               int&       (int val), const int&       (int val),
+%typemap(in, fragment="ToCpp") int64_t*       (int64_t val), const int64_t*       (int64_t val),
+                               int64_t&       (int64_t val), const int64_t&       (int64_t val),
                                double* (double val), const double* (double val),
                                double& (double val), const double& (double val)
 {
@@ -198,14 +198,14 @@
 //        - vectorFromCpp, vectorVectorFromCpp and objectFromCpp 
 //          functions must be defined in FromCpp fragment
 
-%typemap(out, fragment="FromCpp") int,
+%typemap(out, fragment="FromCpp") int64_t,
                                   double,
                                   String
 {
   $result = objectFromCpp($1);
 }
 
-%typemap(out, fragment="FromCpp") int*,    const int*,    int&,    const int&,
+%typemap(out, fragment="FromCpp") int64_t*,    const int64_t*,    int64_t&,    const int64_t&,
                                   double*, const double*, double&, const double&,
                                   String*, const String*, String&, const String&
 {

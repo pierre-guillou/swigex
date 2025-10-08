@@ -220,7 +220,7 @@ std::ostream& operator<<(std::ostream& os,
 }
 #endif
 
-typedef VectorNumT<int>       VectorInt;
+typedef VectorNumT<int64_t>   VectorInt;
 typedef VectorNumT<double>    VectorDouble;
 typedef VectorT<VectorInt>    VectorVectorInt;
 typedef VectorT<VectorDouble> VectorVectorDouble;

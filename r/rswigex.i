@@ -23,18 +23,23 @@
 {
   template <typename Type> int convertToCpp(SEXP obj, Type& value);
   
-  template <> int convertToCpp(SEXP obj, int& value)
+  template <> int convertToCpp(SEXP obj, int64_t& value)
   {
     // Test argument
     if (obj == NULL) return SWIG_TypeError;
 
+    long v{};
     int myres = SWIG_TypeError;
     if (Rf_length(obj) > 0) // Prevent NULL value from becoming NA
     {
-      myres = SWIG_AsVal_int(obj, &value);
+      myres = SWIG_AsVal_long(obj, &v);
       //std::cout << "convertToCpp(int): value=" << value << std::endl;
       if (SWIG_IsOK(myres) && value == R_NaInt) // NA, NaN, Inf or out of bounds value becomes NA
-        value = getNA<int>();
+        value = getNA<int64_t>();
+      else
+      {
+        value = v;
+      }
     }
     return myres;
   }
@@ -153,7 +158,7 @@
 }
 
 // Add typecheck typemaps for dispatching functions
-%typemap(rtypecheck, noblock=1) const int&, int                               { length($arg) == 1 && (is.integer(unlist($arg)) || is.numeric(unlist($arg))) }
+%typemap(rtypecheck, noblock=1) const int64_t&, int64_t                               { length($arg) == 1 && (is.integer(unlist($arg)) || is.numeric(unlist($arg))) }
 %typemap(rtypecheck, noblock=1) const double&, double                         { length($arg) == 1 &&  is.numeric(unlist($arg)) }
 %typemap(rtypecheck, noblock=1) const String&, String                         { length($arg) == 1 &&  is.character(unlist($arg)) }
 %typemap(rtypecheck, noblock=1) const VectorInt&, VectorInt                   { length($arg) == 0 || (length($arg) > 0 && (is.integer(unlist($arg)) || is.numeric(unlist($arg)))) }
@@ -167,15 +172,15 @@
 %fragment("FromCpp", "header")
 {  
   template <typename InputType> struct OutTraits;
-  template <> struct OutTraits<int>     { using OutputType = int; };
+  template <> struct OutTraits<int64_t>     { using OutputType = int64_t; };
   template <> struct OutTraits<double>  { using OutputType = double; };
   template <> struct OutTraits<String>  { using OutputType = String; };
   
   template <typename Type> typename OutTraits<Type>::OutputType convertFromCpp(const Type& value);
-  template <> int convertFromCpp(const int& value)
+  template <> int64_t convertFromCpp(const int64_t& value)
   {
     //std::cout << "convertFromCpp(int): value=" << value << std::endl;
-    if (isNA<int>(value))
+    if (isNA<int64_t>(value))
       return R_NaInt;
     return value;
   }
@@ -193,7 +198,7 @@
   }
   
   template <typename Type> SEXP objectFromCpp(const Type& value);
-  template <> SEXP objectFromCpp(const int& value)
+  template <> SEXP objectFromCpp(const int64_t& value)
   {
     return Rf_ScalarInteger(convertFromCpp(value));
   }
