@@ -14,7 +14,7 @@ int main()
   i = a.testIntRef(22);
   if (i != 22)
     std::cout << "Wrong Int Reference!" << std::endl;
-  const int* pi = a.testIntPtr(new int(32));
+  const Id* pi = a.testIntPtr(new Id(32));
   if ((*pi) != 32)
     std::cout << "Wrong Int Pointer!" << std::endl;
   VectorInt vi = a.testVectorInt({23,33,43});

@@ -29,7 +29,7 @@ public:
 public:
   inline VectorT()                                                    : _v(std::make_shared<Vector>()) { }
   inline VectorT(const Vector& vec)                                   : _v(std::make_shared<Vector>(vec)) { }
-  inline VectorT(size_type count, const T& value = T())               : _v(std::make_shared<Vector>(count, value)) { }
+  inline VectorT(size_type count, const T& value = {})                : _v(std::make_shared<Vector>(count, value)) { }
   template< class InputIt >
   inline VectorT(InputIt first, InputIt last)                         : _v(std::make_shared<Vector>()) { _v->assign(first, last); }
   inline VectorT(const VectorT& other) = default;
@@ -61,9 +61,9 @@ public:
   inline bool operator>=(const VectorT& other) const                  { return *_v >= *other._v; }
 
   // For SWIG users (size_type is not much appreciated)
-  inline const T& getAt(int pos) const;
-  inline void setAt(int pos, const T& v);
-  inline int length() const;
+  inline const T& getAt(Id pos) const;
+  inline void setAt(Id pos, const T& v);
+  inline Id length() const;
 
 #ifndef SWIG
   inline const T& at(size_type pos) const;
@@ -145,7 +145,7 @@ private:
 };
 
 template <typename T>
-const T& VectorT<T>::getAt(int pos) const
+const T& VectorT<T>::getAt(Id pos) const
 {
   if (pos < 0 || pos >= length())
     throw("VectorT<T>::get: index out of range");
@@ -153,7 +153,7 @@ const T& VectorT<T>::getAt(int pos) const
 }
 
 template <typename T>
-void VectorT<T>::setAt(int pos, const T& v)
+void VectorT<T>::setAt(Id pos, const T& v)
 {
   if (pos < 0 || pos >= length())
     throw("VectorT<T>::set: index out of range");
@@ -161,9 +161,9 @@ void VectorT<T>::setAt(int pos, const T& v)
   operator[](pos) = v;
 }
 template <typename T>
-int VectorT<T>::length() const
+Id VectorT<T>::length() const
 {
-  return static_cast<int>(_v->size());
+  return static_cast<Id>(_v->size());
 }
 
 template <typename T>

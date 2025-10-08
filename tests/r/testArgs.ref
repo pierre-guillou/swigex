@@ -16,7 +16,7 @@ Test VectorInt: [26 36]
 Test VectorInt Reference: [26 36]
 Test VectorInt Pointer: [26 36]
 Test VectorInt Reference Out: [26 36]
-_p_VectorNumTT_int_t
+_p_VectorNumTT_long_long_t
 Test VectorInt Reference Def: [2 3] - [4 5]
 Test VectorInt Reference Def: [] - [4 5]
 Test VectorInt Reference Def: [] - [4 5]

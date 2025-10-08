@@ -17,11 +17,11 @@ public:
   void deactivateDisplay() { _display = false; }                                               //   OK        OK
   
 //                                                                                     //   R         Python
-  int testInt(int a);                                                                  //   OK        OK
-  const int& testIntRef(const int& a);                                                 //   OK        OK
-  const int* testIntPtr(const int* a);                                                 //   ## NOK    OK
-  void testIntRefOut(int& a) const;                                                    //   ## NOK    ## NOK
-  void testIntRefDef(const int& a = 2, const int& b = 3);                              //   OK        OK
+  Id testInt(Id a);                                                                    //   OK        OK
+  const Id& testIntRef(const Id& a);                                                   //   OK        OK
+  const Id* testIntPtr(const Id* a);                                                   //   ## NOK    OK
+  void testIntRefOut(Id& a) const;                                                     //   ## NOK    ## NOK
+  void testIntRefDef(const Id& a = 2, const Id& b = 3);                                //   OK        OK
 
   VectorInt testVectorInt(VectorInt a);                                                //   OK        OK
   const VectorInt& testVectorIntRef(const VectorInt& a);                               //   OK        OK
@@ -76,7 +76,7 @@ public:
                               const VectorString& b =
                                     VectorString({"Str6","Str7"}));
 
-  void testIntOverload(int a) const;                                                   //   ## NOK    OK
+  void testIntOverload(Id a) const;                                                    //   ## NOK    OK
   void testIntOverload(const VectorInt& a) const;                                      //   ## NOK    OK
   void testDoubleOverload(double a) const;                                             //   ## NOK    OK
   void testDoubleOverload(const VectorDouble& a) const;                                //   ## NOK    OK
@@ -85,7 +85,7 @@ public:
 
 private:
   bool               _display;
-  int                _varInt;
+  Id                 _varInt;
   double             _varDouble;
   String             _varString;
   VectorInt          _varVectorInt;
