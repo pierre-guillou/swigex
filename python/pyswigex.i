@@ -40,7 +40,7 @@
   #define NPY_INT_NA         std::numeric_limits<NPY_INT_OUT_TYPE>::min()
 #else // Linux or MacOS
   #define NPY_INT_TYPE       NPY_INT64
-  #define NPY_INT_OUT_TYPE   int64_t
+  #define NPY_INT_OUT_TYPE   Id
   #define NPY_INT_NA         std::numeric_limits<NPY_INT_OUT_TYPE>::min()
 #endif
 
@@ -84,7 +84,7 @@
 
   template <typename Type> int convertToCpp(PyObject* obj, Type& value);
   
-  template <> int convertToCpp(PyObject* obj, int64_t& value)
+  template <> int convertToCpp(PyObject* obj, Id& value)
   {
     // Test argument
     if (obj == NULL) return SWIG_TypeError;
@@ -97,7 +97,7 @@
       if (myres == SWIG_OverflowError || v == NPY_INT_NA) // NaN, Inf or out of bound value becomes NA
       {
         myres = SWIG_OK;
-        value = getNA<int64_t>();
+        value = getNA<Id>();
       }
       else {
         myres = SWIG_OK;
@@ -230,27 +230,27 @@
 %fragment("FromCpp", "header")
 {
   template <typename Type> NPY_TYPES numpyType();
-  template <> NPY_TYPES numpyType<int64_t>()    { return NPY_INT_TYPE; }
+  template <> NPY_TYPES numpyType<Id>()    { return NPY_INT_TYPE; }
   template <> NPY_TYPES numpyType<double>() { return NPY_DOUBLE; }
   template <> NPY_TYPES numpyType<String>() { return NPY_STRING; }
   
   template<typename Type> struct TypeHelper;
-  template <> struct TypeHelper<int64_t>    { static bool hasFixedSize() { return true; } };
+  template <> struct TypeHelper<Id>    { static bool hasFixedSize() { return true; } };
   template <> struct TypeHelper<double> { static bool hasFixedSize() { return true; } };
   template <> struct TypeHelper<String> { static bool hasFixedSize() { return false; } };
   template <typename Type> bool hasFixedSize() { return TypeHelper<Type>::hasFixedSize(); }
   
   template <typename InputType> struct OutTraits;
-  template <> struct OutTraits<int64_t> { using OutputType = NPY_INT_OUT_TYPE; };
+  template <> struct OutTraits<Id> { using OutputType = NPY_INT_OUT_TYPE; };
   template <> struct OutTraits<double>  { using OutputType = double; };
   template <> struct OutTraits<String>  { using OutputType = const char*; };
   
   template <typename Type> typename OutTraits<Type>::OutputType convertFromCpp(const Type& value);
-  template <> NPY_INT_OUT_TYPE convertFromCpp(const int64_t& value)
+  template <> NPY_INT_OUT_TYPE convertFromCpp(const Id& value)
   {
     //std::cout << "convertFromCpp(int): value=" << value << std::endl;
     NPY_INT_OUT_TYPE vres = static_cast<NPY_INT_OUT_TYPE>(value);
-    if (isNA<int64_t>(value))
+    if (isNA<Id>(value))
       vres = NPY_INT_NA;
     return vres;
   }
@@ -268,7 +268,7 @@
   }
   
   template <typename Type> PyObject* objectFromCpp(const Type& value);
-  template <> PyObject* objectFromCpp(const int64_t& value)
+  template <> PyObject* objectFromCpp(const Id& value)
   {
     return PyLong_FromLongLong(convertFromCpp(value));
   }

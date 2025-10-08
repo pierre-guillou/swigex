@@ -4,8 +4,8 @@
 #include "swigex_define.hpp"
 #include "VectorNumT.hpp"
 
-SWIGEX_EXPORT int fibn(int n);
-SWIGEX_EXPORT VectorInt fib(int n);
+SWIGEX_EXPORT Id fibn(Id n);
+SWIGEX_EXPORT VectorInt fib(Id n);
 
 /**
  * Class which handles Fibonacci integers list
@@ -13,7 +13,7 @@ SWIGEX_EXPORT VectorInt fib(int n);
 class SWIGEX_EXPORT Fibo
 {
   public:
-    Fibo(int n, const String& title = "");
+    Fibo(Id n, const String& title = "");
     virtual ~Fibo();
 
     void resetFromFiboVal(Fibo fib);
@@ -25,7 +25,7 @@ class SWIGEX_EXPORT Fibo
     String getTitle() const;
 
   protected:
-    int    _n;     ///< Maximum integer of the Fibonacci list
+    Id     _n;     ///< Maximum integer of the Fibonacci list
     String _title; ///< Title to be shown when displaying the list
 };
 

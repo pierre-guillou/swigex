@@ -11,7 +11,7 @@
  *
  * @param n: index of the value
  */
-int fibn(int n)
+Id fibn(Id n)
 {
   if (n <= 0 || n == INT_NA)
   {
@@ -19,13 +19,13 @@ int fibn(int n)
               << std::endl;
     return -1;
   }
-  int a = 0;
-  int b = 1;
-  int i = 1;
+  Id a = 0;
+  Id b = 1;
+  Id i = 1;
   while (true)
   {
     if (i == n) return a;
-    int aa = a;
+    Id aa = a;
     a      = b;
     b      = aa + b;
     i++;
@@ -41,7 +41,7 @@ int fibn(int n)
  *
  * @param n: maximum value to be generated
  */
-VectorInt fib(int n)
+VectorInt fib(Id n)
 {
   VectorInt res;
   if (n <= 0 || n == INT_NA)
@@ -50,12 +50,12 @@ VectorInt fib(int n)
               << std::endl;
     return res;
   }
-  int a = 0;
-  int b = 1;
+  Id a = 0;
+  Id b = 1;
   while (a < n)
   {
     res.push_back(a);
-    int aa = a;
+    Id aa = a;
     a      = b;
     b      = aa + b;
   }
@@ -68,7 +68,7 @@ VectorInt fib(int n)
  * @param n     Strict positive Integer
  * @param title Title to be printed (optional)
  */
-Fibo::Fibo(int n, const String& title)
+Fibo::Fibo(Id n, const String& title)
   : _n(n)
   , _title(title)
 {
