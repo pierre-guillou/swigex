@@ -18,10 +18,10 @@
 // Mandatory for using swig::asptr and swig::from for std::vectors
 %include std_vector.i
 %include std_string.i
-%template(DoNotUseVectorIntStd)     std::vector< Id >;
+%template(DoNotUseVectorIntStd)     std::vector< long long >;
 %template(DoNotUseVectorDoubleStd)  std::vector< double >;
 %template(DoNotUseVectorStringStd)  std::vector< std::string >; // Keep std::string here otherwise asptr fails!
-%template(DoNotUseVVectorIntStd)    std::vector< std::vector< Id > >;
+%template(DoNotUseVVectorIntStd)    std::vector< std::vector< long long > >;
 %template(DoNotUseVVectorDoubleStd) std::vector< std::vector< double > >;
 
 ////////////////////////////////////////////////
