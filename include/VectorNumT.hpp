@@ -30,7 +30,7 @@ public:
 public:
   inline VectorNumT()                                              : Parent() { }
   inline VectorNumT(const Vector& vec)                             : Parent(vec) { }
-  inline VectorNumT(size_type count, const T& value = T())         : Parent(count, value) { }
+  inline VectorNumT(size_type count, const T& value = {})         : Parent(count, value) { }
   template< class InputIt >
   inline VectorNumT(InputIt first, InputIt last)                   : Parent(first, last) { }
   inline VectorNumT(const VectorNumT& other) = default;

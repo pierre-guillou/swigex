@@ -7,7 +7,7 @@
 #include <cstdint>
 
 typedef std::string String;
-using Id = int64_t;
+using Id = long long;
 
 #define DEFAULT_TITLE "Fibonacci List"
 

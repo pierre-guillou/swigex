@@ -29,7 +29,7 @@ public:
 public:
   inline VectorT()                                                    : _v(std::make_shared<Vector>()) { }
   inline VectorT(const Vector& vec)                                   : _v(std::make_shared<Vector>(vec)) { }
-  inline VectorT(size_type count, const T& value = T())               : _v(std::make_shared<Vector>(count, value)) { }
+  inline VectorT(size_type count, const T& value = {})               : _v(std::make_shared<Vector>(count, value)) { }
   template< class InputIt >
   inline VectorT(InputIt first, InputIt last)                         : _v(std::make_shared<Vector>()) { _v->assign(first, last); }
   inline VectorT(const VectorT& other) = default;
