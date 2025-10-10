@@ -331,14 +331,14 @@ function(x, i, value)
   x
 }
 
-setMethod('[',    '_p_VectorTT_int_t',                  getVitem)
-setMethod('[<-',  '_p_VectorTT_int_t',                  setVitem)
+setMethod('[',    '_p_VectorTT_Id_t',                  getVitem)
+setMethod('[<-',  '_p_VectorTT_Id_t',                  setVitem)
 setMethod('[',    '_p_VectorTT_double_t',               getVitem)
 setMethod('[<-',  '_p_VectorTT_double_t',               setVitem)
 setMethod('[',    '_p_VectorTT_String_t',               getVitem)
 setMethod('[<-',  '_p_VectorTT_String_t',               setVitem)
-setMethod('[',    '_p_VectorNumTT_int_t',               getVitem)
-setMethod('[<-',  '_p_VectorNumTT_int_t',               setVitem)
+setMethod('[',    '_p_VectorNumTT_Id_t',               getVitem)
+setMethod('[<-',  '_p_VectorNumTT_Id_t',               setVitem)
 setMethod('[',    '_p_VectorNumTT_double_t',            getVitem)
 setMethod('[<-',  '_p_VectorNumTT_double_t',            setVitem)
 setMethod('[[',   '_p_VectorTT_VectorInt_t',            getVitem)
