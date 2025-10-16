@@ -19,9 +19,13 @@
 %include std_vector.i
 %include std_string.i
 %template(DoNotUseVectorIntStd)     std::vector< int >;
+%template(DoNotUseVectorLongStd)    std::vector< long >;
+%template(DoNotUseVectorLLongStd)   std::vector< long long >;
 %template(DoNotUseVectorDoubleStd)  std::vector< double >;
 %template(DoNotUseVectorStringStd)  std::vector< std::string >; // Keep std::string here otherwise asptr fails!
 %template(DoNotUseVVectorIntStd)    std::vector< std::vector< int > >;
+%template(DoNotUseVVectorLongStd)   std::vector< std::vector< long > >;
+%template(DoNotUseVVectorLLongStd)  std::vector< std::vector< long long > >;
 %template(DoNotUseVVectorDoubleStd) std::vector< std::vector< double > >;
 
 ////////////////////////////////////////////////
@@ -32,7 +36,7 @@
 //          functions must be defined in ToCpp fragment
 
 // Convert scalar arguments by value
-%typemap(in, fragment="ToCpp") int,
+%typemap(in, fragment="ToCpp") Id,
                                double,
                                String
 {
@@ -50,8 +54,8 @@
 
 // Convert scalar argument by reference
 // Don't add String or char here otherwise "res2 not declared" / "alloc1 not declared"
-%typemap(in, fragment="ToCpp") int*       (int val), const int*       (int val),
-                               int&       (int val), const int&       (int val),
+%typemap(in, fragment="ToCpp") Id*     (Id val),     const Id*     (Id val),
+                               Id&     (Id val),     const Id&     (Id val),
                                double* (double val), const double* (double val),
                                double& (double val), const double& (double val)
 {
@@ -198,14 +202,14 @@
 //        - vectorFromCpp, vectorVectorFromCpp and objectFromCpp 
 //          functions must be defined in FromCpp fragment
 
-%typemap(out, fragment="FromCpp") int,
+%typemap(out, fragment="FromCpp") Id,
                                   double,
                                   String
 {
   $result = objectFromCpp($1);
 }
 
-%typemap(out, fragment="FromCpp") int*,    const int*,    int&,    const int&,
+%typemap(out, fragment="FromCpp") Id*,     const Id*,     Id&,     const Id&,
                                   double*, const double*, double&, const double&,
                                   String*, const String*, String&, const String&
 {
