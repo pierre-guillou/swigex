@@ -17,7 +17,7 @@
 %}
 %include numpy.i
 %init %{
-  import_array(); // Mandatory for using PyArray_* functions
+  _import_array(); // Mandatory for using PyArray_* functions
 %}
 
 %begin %{
