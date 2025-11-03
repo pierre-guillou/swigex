@@ -4,7 +4,9 @@
 #include <iostream>
 #include <cmath>
 #include <math.h>
+
 typedef std::string String;
+using Id = long long;
 
 #define DEFAULT_TITLE "Fibonacci List"
 
@@ -16,12 +18,12 @@ typedef std::string String;
 
 template <typename T> inline T getNA();
 template <> inline double getNA() { return DOUBLE_NA; }
-template <> inline int    getNA() { return INT_NA; }
+template <> inline Id     getNA() { return INT_NA; }
 template <> inline String getNA() { return STRING_NA; }
 
 template <typename T> inline bool isNA(const T& v);
 template <> inline bool isNA(const double& v) { return (v == getNA<double>() || std::isnan(v) || std::isinf(v)); }
-template <> inline bool isNA(const int& v)    { return (v == getNA<int>()); }
+template <> inline bool isNA(const Id& v)     { return (v == getNA<Id>()); }
 template <> inline bool isNA(const String& v) { return (v == getNA<String>()); }
 
 #endif // SWIG

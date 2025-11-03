@@ -12,10 +12,10 @@
 // Export VectorXXX classes
 %include VectorT.hpp
 %include VectorNumT.hpp
-%template(VectorTInt)         VectorT< int >;
+%template(VectorTInt)         VectorT< long long >;
 %template(VectorTDouble)      VectorT< double >;
 %template(VectorString)       VectorT< String >;
-%template(VectorInt)          VectorNumT< int >;
+%template(VectorInt)          VectorNumT< long long >;
 %template(VectorDouble)       VectorNumT< double >;
 %template(VectorVectorInt)    VectorT< VectorInt >;
 %template(VectorVectorDouble) VectorT< VectorDouble >;

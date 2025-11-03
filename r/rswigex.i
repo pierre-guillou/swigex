@@ -23,7 +23,7 @@
 {
   template <typename Type> int convertToCpp(SEXP obj, Type& value);
   
-  template <> int convertToCpp(SEXP obj, int& value)
+  template <> int convertToCpp(SEXP obj, Id& value)
   {
     // Test argument
     if (obj == NULL) return SWIG_TypeError;
@@ -31,10 +31,10 @@
     int myres = SWIG_TypeError;
     if (Rf_length(obj) > 0) // Prevent NULL value from becoming NA
     {
-      myres = SWIG_AsVal_int(obj, &value);
+      myres = SWIG_AsVal_long_SS_long(obj, &value);
       //std::cout << "convertToCpp(int): value=" << value << std::endl;
       if (SWIG_IsOK(myres) && value == R_NaInt) // NA, NaN, Inf or out of bounds value becomes NA
-        value = getNA<int>();
+        value = getNA<Id>();
     }
     return myres;
   }
@@ -153,7 +153,7 @@
 }
 
 // Add typecheck typemaps for dispatching functions
-%typemap(rtypecheck, noblock=1) const int&, int                               { length($arg) == 1 && (is.integer(unlist($arg)) || is.numeric(unlist($arg))) }
+%typemap(rtypecheck, noblock=1) const Id&, Id                                 { length($arg) == 1 && (is.integer(unlist($arg)) || is.numeric(unlist($arg))) }
 %typemap(rtypecheck, noblock=1) const double&, double                         { length($arg) == 1 &&  is.numeric(unlist($arg)) }
 %typemap(rtypecheck, noblock=1) const String&, String                         { length($arg) == 1 &&  is.character(unlist($arg)) }
 %typemap(rtypecheck, noblock=1) const VectorInt&, VectorInt                   { length($arg) == 0 || (length($arg) > 0 && (is.integer(unlist($arg)) || is.numeric(unlist($arg)))) }
@@ -167,15 +167,15 @@
 %fragment("FromCpp", "header")
 {  
   template <typename InputType> struct OutTraits;
-  template <> struct OutTraits<int>     { using OutputType = int; };
+  template <> struct OutTraits<Id>      { using OutputType = Id; };
   template <> struct OutTraits<double>  { using OutputType = double; };
   template <> struct OutTraits<String>  { using OutputType = String; };
   
   template <typename Type> typename OutTraits<Type>::OutputType convertFromCpp(const Type& value);
-  template <> int convertFromCpp(const int& value)
+  template <> Id convertFromCpp(const Id& value)
   {
     //std::cout << "convertFromCpp(int): value=" << value << std::endl;
-    if (isNA<int>(value))
+    if (isNA<Id>(value))
       return R_NaInt;
     return value;
   }
@@ -193,7 +193,7 @@
   }
   
   template <typename Type> SEXP objectFromCpp(const Type& value);
-  template <> SEXP objectFromCpp(const int& value)
+  template <> SEXP objectFromCpp(const Id& value)
   {
     return Rf_ScalarInteger(convertFromCpp(value));
   }
@@ -326,14 +326,14 @@ function(x, i, value)
   x
 }
 
-setMethod('[',    '_p_VectorTT_int_t',                  getVitem)
-setMethod('[<-',  '_p_VectorTT_int_t',                  setVitem)
+setMethod('[',    '_p_VectorTT_long_long_t',            getVitem)
+setMethod('[<-',  '_p_VectorTT_long_long_t',            setVitem)
 setMethod('[',    '_p_VectorTT_double_t',               getVitem)
 setMethod('[<-',  '_p_VectorTT_double_t',               setVitem)
 setMethod('[',    '_p_VectorTT_String_t',               getVitem)
 setMethod('[<-',  '_p_VectorTT_String_t',               setVitem)
-setMethod('[',    '_p_VectorNumTT_int_t',               getVitem)
-setMethod('[<-',  '_p_VectorNumTT_int_t',               setVitem)
+setMethod('[',    '_p_VectorNumTT_long_long_t',         getVitem)
+setMethod('[<-',  '_p_VectorNumTT_long_long_t',         setVitem)
 setMethod('[',    '_p_VectorNumTT_double_t',            getVitem)
 setMethod('[<-',  '_p_VectorNumTT_double_t',            setVitem)
 setMethod('[[',   '_p_VectorTT_VectorInt_t',            getVitem)

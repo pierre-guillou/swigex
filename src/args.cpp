@@ -20,34 +20,34 @@ TypeClass::~TypeClass()
 
 }
 
-int TypeClass::testInt(int a)
+Id TypeClass::testInt(Id a)
 {
   _varInt = a;
   if (_display) std::cout << "Test int: " << a << std::endl;
   return _varInt;
 }
 
-const int& TypeClass::testIntRef(const int& a)
+const Id& TypeClass::testIntRef(const Id& a)
 {
   _varInt = a;
   if (_display) std::cout << "Test int Reference: " << a << std::endl;
   return _varInt;
 }
 
-const int* TypeClass::testIntPtr(const int* a)
+const Id* TypeClass::testIntPtr(const Id* a)
 {
   _varInt = *a;
   if (_display) std::cout << "Test int Pointer: " << *a << std::endl;
   return &_varInt;
 }
 
-void TypeClass::testIntRefOut(int& a) const
+void TypeClass::testIntRefOut(Id& a) const
 {
   a = _varInt;
   if (_display) std::cout << "Test int Reference Out: " << a << std::endl;
 }
 
-void TypeClass::testIntRefDef(const int& a, const int& b)
+void TypeClass::testIntRefDef(const Id& a, const Id& b)
 {
   _varInt = a;
   if (_display) std::cout << "Test int Reference Def: " << a << " - " << b << std::endl;
@@ -284,7 +284,7 @@ void TypeClass::testVectorStringRefDef(const VectorString& a, const VectorString
   if (_display) std::cout << "Test VectorString Reference Def: " << a << " - " << b << std::endl;
 }
 
-void TypeClass::testIntOverload(int a) const
+void TypeClass::testIntOverload(Id a) const
 {
   std::cout << "Test int Overload [Scalar]: " << a << std::endl;
 }

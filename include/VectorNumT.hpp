@@ -30,7 +30,7 @@ public:
 public:
   inline VectorNumT()                                              : Parent() { }
   inline VectorNumT(const Vector& vec)                             : Parent(vec) { }
-  inline VectorNumT(size_type count, const T& value = T())         : Parent(count, value) { }
+  inline VectorNumT(size_type count, const T& value = {})          : Parent(count, value) { }
   template< class InputIt >
   inline VectorNumT(InputIt first, InputIt last)                   : Parent(first, last) { }
   inline VectorNumT(const VectorNumT& other) = default;
@@ -210,7 +210,7 @@ std::ostream& operator<<(std::ostream& os,
                          const VectorT<VectorNumT<T>>& vec)
 {
   os << "[";
-  for (int i = 0, n = (int)vec.size(); i < n; i++)
+  for (Id i = 0, n = (Id)vec.size(); i < n; i++)
   {
     os << vec.at(i).toString();
     if (i != n - 1) os << " ";
@@ -220,7 +220,7 @@ std::ostream& operator<<(std::ostream& os,
 }
 #endif
 
-typedef VectorNumT<int>       VectorInt;
+typedef VectorNumT<Id>        VectorInt;
 typedef VectorNumT<double>    VectorDouble;
 typedef VectorT<VectorInt>    VectorVectorInt;
 typedef VectorT<VectorDouble> VectorVectorDouble;
