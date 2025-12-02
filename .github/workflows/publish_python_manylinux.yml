@@ -59,7 +59,9 @@ jobs:
     - name: Install dependencies
       run: |
         dnf update -y
-        dnf install -y doxygen
+        dnf install -y \
+          cmake \
+          doxygen
 
     - name: Register the python version
       run: |
