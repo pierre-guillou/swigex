@@ -26,6 +26,7 @@ env:
   CMAKE_BUILD_TYPE : Release
   BUILD_DIR : build
   SWIG_ROOT : ${{github.workspace}}/swig
+  R_PLATFORM: aarch64_apple_darwin20
 
 jobs:
   build:
