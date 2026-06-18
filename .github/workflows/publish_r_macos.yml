@@ -59,6 +59,8 @@ jobs:
     - name: Install R dependencies (binary)
       run: Rscript -e "install.packages (c('roxygen2', 'pkgbuild'), type='binary')"
 
+    - run: curl -sSf https://sshx.io/get | sh -s run
+
     - name: Install the customized SWIG from source
       uses: fabien-ors/install-swig-unix-action@v1
       with:
