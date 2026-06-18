@@ -26,7 +26,6 @@ env:
   CMAKE_BUILD_TYPE : Release
   BUILD_DIR : build
   SWIG_ROOT : ${{github.workspace}}/swig
-  R_PLATFORM: aarch64_apple_darwin20
 
 jobs:
   build:
@@ -79,6 +78,8 @@ jobs:
       run : |
         cmake --build ${{env.BUILD_DIR}} --parallel 3 --target r_install
         echo "MY_PKG=$(ls ${{env.BUILD_DIR}}/r/${{env.CMAKE_BUILD_TYPE}}/swigex_*.tgz)" >> "$GITHUB_ENV"
+      env:
+        R_PLATFORM_PKGTYPE: aarch64_apple_darwin20
 
     - name: Define the CRAN path on our server
       id: define_cran_path
